@@ -24,8 +24,9 @@ var questions = [
     },
 ];
 
+var state = "start";
+
 function display() {
-    var state = "start";
 
     if (state === "start") {
         startEl.style.display = "block";
@@ -47,3 +48,16 @@ function display() {
 };
 
 display();
+
+function startQuestions() {
+    state = "quiz";
+    display();
+};
+
+startButton.addEventListener("click", function(event) {
+    startQuestions();
+});
+
+
+
+
