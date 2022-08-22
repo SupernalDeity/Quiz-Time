@@ -1,6 +1,6 @@
-var startEL = document.querySelector("#start");
-var quizEL = document.querySelector("#quiz");
-var scoreEL = document.querySelector("#score");
+var startEl = document.querySelector("#start");
+var quizEl = document.querySelector("#quiz");
+var scoreEl = document.querySelector("#score");
 var startButton = document.querySelector("#start button");
 var submitButton = document.querySelector("#score button");
 var questionsEL = document.querySelector("#question");
@@ -22,5 +22,28 @@ var questions = [
     {name: "Fifth",
     answers: [17,18,19,20,]
     },
-]
+];
 
+function display() {
+    var state = "start";
+
+    if (state === "start") {
+        startEl.style.display = "block";
+        quizEl.style.display = "none";
+        scoreEl.style.display = "none";
+    }
+    
+    if (state === "quiz") {
+        quizEl.style.display = "block";
+        startEl.style.display = "none";
+        scoreEl.style.display = "none";
+    }
+    
+    if (state === "score") {
+        scoreEl.style.display = "block";
+        startEl.style.display = "none";
+        quizEl.style.display = "none";
+    }
+};
+
+display();
