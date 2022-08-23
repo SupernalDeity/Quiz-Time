@@ -1,6 +1,7 @@
 var startEl = document.querySelector("#start");
 var quizEl = document.querySelector("#quiz");
 var scoreEl = document.querySelector("#score");
+var gameOverEl = document.querySelector("#gameover");
 var startButton = document.querySelector("#start button");
 var submitButton = document.querySelector("#score button");
 var questionEL = document.querySelector("#question");
@@ -38,37 +39,53 @@ function display() {
         startEl.style.display = "block";
         quizEl.style.display = "none";
         scoreEl.style.display = "none";
+        gameOverEl.style.display = "none";
     }
     
     if (state === "quiz") {
         quizEl.style.display = "block";
         startEl.style.display = "none";
         scoreEl.style.display = "none";
+        gameOverEl.style.display = "none";
     }
     
     if (state === "score") {
         scoreEl.style.display = "block";
         startEl.style.display = "none";
         quizEl.style.display = "none";
+        gameOverEl.style.display = "none";
     }
 };
+    if (state === "gameover") {
+        gameOverEl.style.display = "block";
+        startEl.style.display = "none";
+        quizEl.style.display = "none";
+        scoreEl.style.display = "none";
+    }
 
 display();
+
+function gameOverScreen() {
+    state = "gameover"
+    display();
+};
 
 function startQuestions() {
     state = "quiz";
     position = 0;
     display();
     displayQuestion();
+    setTimeout(gameOverScreen, 3000)
 };
 
-var buttonEl = document.createElement('button');
-answersEl.appendChild(buttonEl);
 
 function displayQuestion() {
     questionEL.textContent = questions[position].name;
+    answersEl.textContent = null;
 
-    for (let i = 0; i < questions.length; i++) {
+    for (let i = 0; i < 4; i++) {
+    var buttonEl = document.createElement('button');
+    answersEl.appendChild(buttonEl);
     buttonEl.textContent = questions[position].possibleAnswers[i];
     };
 };
@@ -85,10 +102,11 @@ quizEl.addEventListener("click", function(event) {
          if (position > 4 ) {
             state = "score";
             display();
+            clearInterval();
          }
 
          else {
-                displayQuestion();
+            displayQuestion();
          }
     }
 });
