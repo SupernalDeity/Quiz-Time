@@ -88,3 +88,18 @@ startButton.addEventListener("click", function(event) {
     startQuestions();
 });
 
+quizEl.addEventListener("click", function(event) {
+    var element = event.target;
+    if (element.matches('#answers')) {
+         position ++;
+
+         if (position > questions.length ) {
+            state = "score";
+            display();
+         }
+         
+         else {
+             questionPosition();
+         }
+    }
+});
