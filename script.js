@@ -1,37 +1,39 @@
 var startEl = document.querySelector("#start");
 var quizEl = document.querySelector("#quiz");
 var scoreEl = document.querySelector("#score");
-var gameOverEl = document.querySelector("#gameover");
+var gameOverEl = document.querySelector("#game-over");
 var startButton = document.querySelector("#start button");
 var submitButton = document.querySelector("#score button");
 var questionEL = document.querySelector("#question");
 var answersEl = document.querySelector("#answers");
-
-var questions = [
-    {name: "First", 
-    possibleAnswers: [1,2,3,4],
-    correct: 0
-    }, 
-    {name: "Second",
-    possibleAnswers: [5,6,7,8],
-    correct: 3
-    },
-    {name: "Third",
-    possibleAnswers: [9,10,11,12],
-    correct: 1
-    },
-    {name: "Forth",
-    possibleAnswers: [13,14,15,16],
-    correct: 0
-    },
-    {name: "Fifth",
-    possibleAnswers: [17,18,19,20],
-    correct: 2
-    }
-];
+var timerEl = document.querySelector("#quiz-timer")
 
 var state = "start";
 var position = 0;
+var timeLeft = 60; 
+
+var questions = [
+    {name: "Commonly used data types DO Not include:", 
+    possibleAnswers: ['strings','booleans','alerts','numbers'],
+    correct: 'alerts'
+    }, 
+    {name: "The condition in an if/else statement is enclosed with _______.",
+    possibleAnswers: ['quotes','curly brackets','parenthesis','square brackets'],
+    correct: 'parenthesis'
+    },
+    {name: "Arrays in JavaScript can be used to store _________.",
+    possibleAnswers: ['numbers and strings','other arrays','booleans','all of the above'],
+    correct: 'all of the above'
+    },
+    {name: "String values must be enclosed within ________ when being assigned to variables.",
+    possibleAnswers: ['commas','curly brackets','quotes','parenthesis'],
+    correct: 'quotes'
+    },
+    {name: "A very useful too used during development and debugging for printing content to the debugger is:",
+    possibleAnswers: ['JavaScript','terminal/bash','for loops','console log'],
+    correct: 'console log'
+    }
+];
 
 function display() {
 
@@ -55,39 +57,50 @@ function display() {
         quizEl.style.display = "none";
         gameOverEl.style.display = "none";
     }
-};
     if (state === "gameover") {
         gameOverEl.style.display = "block";
         startEl.style.display = "none";
         quizEl.style.display = "none";
         scoreEl.style.display = "none";
     }
+};
 
 display();
-
-function gameOverScreen() {
-    state = "gameover"
-    display();
-};
 
 function startQuestions() {
     state = "quiz";
     position = 0;
     display();
     displayQuestion();
-    setTimeout(gameOverScreen, 3000)
+    timer();
 };
-
 
 function displayQuestion() {
     questionEL.textContent = questions[position].name;
     answersEl.textContent = null;
-
+    
     for (let i = 0; i < 4; i++) {
-    var buttonEl = document.createElement('button');
-    answersEl.appendChild(buttonEl);
-    buttonEl.textContent = questions[position].possibleAnswers[i];
+        var buttonEl = document.createElement('button');
+        answersEl.appendChild(buttonEl);
+        buttonEl.textContent = questions[position].possibleAnswers[i];
     };
+};
+
+function gameOverScreen() {
+    state = "gameover";
+    display();
+    clearInterval(time);
+};
+
+function timer(){
+    time = setInterval(function() {
+        timeLeft --;
+        timerEl.innerHTML = "Time remaining: " + timeLeft;
+        
+        if (timeLeft === 0) {
+            gameOverScreen();
+        };
+    }, 1000);
 };
 
 startButton.addEventListener("click", function(event) {
@@ -102,7 +115,7 @@ quizEl.addEventListener("click", function(event) {
          if (position > 4 ) {
             state = "score";
             display();
-            clearInterval();
+            clearInterval(time);
          }
 
          else {
@@ -110,3 +123,11 @@ quizEl.addEventListener("click", function(event) {
          }
     }
 });
+
+// submitButton.addEventListener("click", function(event){
+//     scoreInitials();
+// });
+
+// function scoreInitials() {
+
+// };
