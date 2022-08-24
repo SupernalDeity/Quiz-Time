@@ -6,11 +6,13 @@ var startButton = document.querySelector("#start button");
 var submitButton = document.querySelector("#score button");
 var questionEL = document.querySelector("#question");
 var answersEl = document.querySelector("#answers");
-var timerEl = document.querySelector("#quiz-timer")
+var timerEl = document.querySelector("#quiz-timer");
+var newScoreEl = document.querySelector("#new-score");
 
 var state = "start";
 var position = 0;
 var timeLeft = 60; 
+var newScore = 0;
 
 var questions = [
     {name: "Commonly used data types DO Not include:", 
@@ -103,6 +105,12 @@ function timer(){
     }, 1000);
 };
 
+function displayScore() {
+    state = "score";
+    display();
+    newScoreEl.textContent = "Congrats! Your scored " + newScore + " points!";
+}
+
 startButton.addEventListener("click", function(event) {
     startQuestions();
 });
@@ -110,24 +118,34 @@ startButton.addEventListener("click", function(event) {
 quizEl.addEventListener("click", function(event) {
     var element = event.target;
     if (element.matches('button')) {
-         position ++;
+        if (element.textContent === (questions[position].correct)){
+            newScore += timeLeft;
+            position ++;
+        } 
 
-         if (position > 4 ) {
-            state = "score";
-            display();
+        else {
+            timeLeft -= 15;
+            alert('Choice was incorrect!')
+        }
+
+        if (position > 4 ) {
             clearInterval(time);
-         }
+            displayScore();
+        }
 
-         else {
+        else {
             displayQuestion();
-         }
+        }
     }
 });
 
-// submitButton.addEventListener("click", function(event){
-//     scoreInitials();
-// });
+submitButton.addEventListener("click", function(event){
+    event.preventDefault;
+    scoreInitials();
+});
 
-// function scoreInitials() {
+function scoreInitials() {
 
-// };
+};
+
+
