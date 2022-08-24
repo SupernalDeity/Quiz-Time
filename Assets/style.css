@@ -1,0 +1,15 @@
+body {
+    background-color: aquamarine;
+}
+
+section {
+    text-align: center;
+}
+
+#answers button {
+    margin: 20px;
+}
+
+button {
+background-color: palegreen;
+}

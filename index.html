@@ -6,17 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JavaQuiz</title>
+    <link rel="stylesheet" href="./Assets/style.css">
 </head>
 
 <body>
-    <section id="quiz-timer">Time remaining: 60</section>
-
+    
     <section id="start">
-        <h2>Start</h2>
+        <h2>Click BEGIN to Start a Fun Quiz</h2>
         <button>BEGIN</button>
     </section>
-
+    
     <section id="quiz">
+        <section id="quiz-timer">Time remaining: 60</section>
         <h2 id="question">Questions</h2>
         <div id="answers"></div>
     </section>
@@ -24,8 +25,9 @@
     <section id="score">
         <h2 id="new-score"></h2>
         <h3>Enter Initials</h3>
-        <input type="text"/>
+        <input id="user-input" type="text"/>
         <button>SUBMIT</button>
+        <h4 id="high-scores">""HighScores""</h4>
     </section>
 
     <section id="game-over"> 
@@ -33,7 +35,7 @@
         <p>No time Remaining</p>
     </section>
 
-    <script src="./script.js"></script>
+    <script src="./Assets/script.js"></script>
 
 </body>
 

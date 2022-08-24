@@ -8,11 +8,13 @@ var questionEL = document.querySelector("#question");
 var answersEl = document.querySelector("#answers");
 var timerEl = document.querySelector("#quiz-timer");
 var newScoreEl = document.querySelector("#new-score");
+var highScoresEl = document.querySelector("#high-scores");
 
 var state = "start";
 var position = 0;
 var timeLeft = 60; 
 var newScore = 0;
+var userInitials;
 
 var questions = [
     {name: "Commonly used data types DO Not include:", 
@@ -99,7 +101,7 @@ function timer(){
         timeLeft --;
         timerEl.innerHTML = "Time remaining: " + timeLeft;
         
-        if (timeLeft === 0) {
+        if (timeLeft <= 0) {
             gameOverScreen();
         };
     }, 1000);
@@ -123,7 +125,7 @@ quizEl.addEventListener("click", function(event) {
             position ++;
         } 
 
-        else {
+        else { 
             timeLeft -= 15;
             alert('Choice was incorrect!')
         }
@@ -139,13 +141,34 @@ quizEl.addEventListener("click", function(event) {
     }
 });
 
+
 submitButton.addEventListener("click", function(event){
     event.preventDefault;
-    scoreInitials();
+    userInitials = document.querySelector("#user-input").value;
+        if (userInitials.length >= 4) {
+            alert('Please enter only three letters')
+        }
+
+        if (userInitials.length <= 2) {
+            alert('Please enter three letters')
+        }
+
+        else {
+        storeUserInfo();
+        }
 });
 
-function scoreInitials() {
-
+function storeUserInfo (){
+    var userInfo = [{Initials: userInitials}, {Score: newScore}];
+    localStorage.setItem("UserInfo", JSON.stringify(userInfo));
+    updateHighScore();
 };
+
+function updateHighScore() {
+    var headerEl = document.createElement('h5');
+    headerEl.textContent = userInitials + "------" + newScore;
+    highScoresEl.appendChild(headerEl);
+}
+
 
 
