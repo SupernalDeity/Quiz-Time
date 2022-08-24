@@ -147,28 +147,32 @@ submitButton.addEventListener("click", function(event){
     userInitials = document.querySelector("#user-input").value;
         if (userInitials.length >= 4) {
             alert('Please enter only three letters')
+            return '';
         }
 
         if (userInitials.length <= 2) {
             alert('Please enter three letters')
+            return '';
         }
 
         else {
-        storeUserInfo();
+            submitButton.style.display = 'none';
+            updateHighScore();
         }
 });
 
-function storeUserInfo (){
+function updateHighScore() { 
+    // previousScores();
     var userInfo = [{Initials: userInitials}, {Score: newScore}];
     localStorage.setItem("UserInfo", JSON.stringify(userInfo));
-    updateHighScore();
-};
 
-function updateHighScore() {
     var headerEl = document.createElement('h5');
     headerEl.textContent = userInitials + "------" + newScore;
     highScoresEl.appendChild(headerEl);
-}
+    
+};
 
-
+// function previousScores() {
+//     var oldScores = localStorage.getItem(userInfo);
+// ]
 
