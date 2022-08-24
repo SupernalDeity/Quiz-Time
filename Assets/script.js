@@ -109,6 +109,7 @@ function timer(){
 
 function displayScore() {
     state = "score";
+    previousScores();
     display();
     newScoreEl.textContent = "Congrats! Your scored " + newScore + " points!";
 }
@@ -162,17 +163,27 @@ submitButton.addEventListener("click", function(event){
 });
 
 function updateHighScore() { 
-    // previousScores();
-    var userInfo = [{Initials: userInitials}, {Score: newScore}];
-    localStorage.setItem("UserInfo", JSON.stringify(userInfo));
+    var oldScores = JSON.parse(localStorage.getItem("UserInfo")) || [];
+    var userInfo = {initials: userInitials, score: newScore};
+    oldScores.push(userInfo)
+    localStorage.setItem("UserInfo", JSON.stringify(oldScores));
 
     var headerEl = document.createElement('h5');
     headerEl.textContent = userInitials + "------" + newScore;
     highScoresEl.appendChild(headerEl);
-    
 };
 
-// function previousScores() {
-//     var oldScores = localStorage.getItem(userInfo);
-// ]
+function previousScores() {
+    var oldScores = JSON.parse(localStorage.getItem("UserInfo")) || [];
 
+    if (oldScores.length > 0) {
+        highScoresEl.innerHTML = null;
+        for (var i = 0; i < oldScores.length; i++) {
+        var headerEl = document.createElement('h5');
+        headerEl.textContent = oldScores[i].initials + "------" + oldScores[i].score;
+        highScoresEl.appendChild(headerEl);
+        }
+      } else {
+        return;
+      }
+};
